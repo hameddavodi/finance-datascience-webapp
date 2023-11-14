@@ -4,7 +4,7 @@ import numpy as np
 from sqlalchemy import *
 from sqlalchemy.orm import Session,declarative_base, sessionmaker
 from sqlalchemy.sql import func
-import datetime
+from datetime import datetime, timezone
 import pandas as pd
 from sqlalchemy import create_engine, MetaData, Table, Column, String
 import os
@@ -15,8 +15,6 @@ api_key = 'qHsgWDMVoKKB9CNacVKPc9giyRyVgm8YdGqAFjJTibzc6FEMKEJdmBXvDlVzrTiK'
 api_secret = 'i45SJIRjGM9SL4fe42hC7V7c9B6YUUiQm7lVELHTZGzrE50K25pfv8ZagnuWEduI'
 
 client = Client( api_key = api_key , api_secret = api_secret)
-
-
 
 # define connections setup and write to database
 ########################################################################################################
@@ -56,6 +54,7 @@ def write_to_database_historical(query):
         
     except Exception as e:
         print(f"Error writing to the database: {str(e)}")
+        
 ########################################################################################################
 # Here I defined a function to close the connection 
 def close_database_connection():
@@ -68,12 +67,6 @@ def close_database_connection():
 # Initialize the connection 
 # Call connect_to_database to initialize engine and session
 engine = connect_to_database() 
-
-
-
-engine
-
-
 
 ########################################################################################################
 # Here I create a class to create a table within the database 
@@ -101,15 +94,12 @@ class DataBase(Base):
 ########################################################################################################
 # There are some further notes to collect from the youtube you have bookmarket
 
-
 # This function should be called in order to make dataframe table
-try:
-    Base.metadata.create_all(engine)
-except:
-    pass
-
-
-
+def tablize():
+    try:
+        Base.metadata.create_all(engine)
+    except:
+        pass
 
 ########################################################################################################
 # Define realtime data stream setup using binance python lib
@@ -138,7 +128,6 @@ def get_last_closed_price(symbol, interval):
     # Now the line above will return a single vector like (row) of the last data 
     
     return Kline_realtime_data
-
 
 
 ########################################################################################################
@@ -180,9 +169,6 @@ def get_historical_data(symbol,interval, start, end):
     return data_frame
 
 
-
-
-
 ########################################################################################################
 # Define engine to get historical data and store it in CSVs
 
@@ -206,8 +192,6 @@ def write(sym, inter, start,end):
     concatenated_df = concatenated_df.set_index('key')
             
     return concatenated_df
-
-
 
 ########################################################################################################
 # Get the list of top 10 Coins with highest marketcap and returns
@@ -247,12 +231,7 @@ def get_products(start, end):
 
     #   coins = list(pd.DataFrame(returns, columns = ["Coin","1_day_return"]).sort_values(by = "1_day_return", ascending = False).head(10)["Coin"])
     
-    
     return coins
-    
-    
-    
-    
     
     ########################################################################################################
 # Here is the function to write the CSV to Postgres
@@ -295,7 +274,6 @@ def create_sql_table_from_csv(engine):
     concatenated_df.to_sql('dataframe', con=engine, if_exists='replace', index=False)
     
     
-    
     ########################################################################################################
 # Finally, here is the function to write the data into PostgreSQL DIRECTLY
 def write_sql_table(start,end):
@@ -335,29 +313,8 @@ def write_sql_table(start,end):
     
     concatenated_df.to_sql('dataframe', con=engine, if_exists='replace', index=False)
     
-    
-    
-    
-########################################################################################################
-########################################################################################################
-# Lets test the functions
-
-start = "2023-01-01"
-end = "2023-11-01"
-write_sql_table(start,end)
-#create_sql_table_from_csv(start,end)
-########################################################################################################
-########################################################################################################
-
-
-
-get_products(start,end)
-
-
-
-from datetime import datetime, timedelta
-symbol = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
-symbol.sort()
+ ########################################################################################################
+ ########################################################################################################   
 
 def eval_price(symbol, start_date):
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
@@ -373,11 +330,33 @@ def eval_price(symbol, start_date):
         temp_date = get_historical_data(j , '1d' , start_date, end_date)
         con_date = pd.concat([con_date, temp_date], axis=0)
     con_date = np.array(con_date["ClosePrice"][con_date["KlineOpen"] ==  int(datetime.strptime(start_date, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()) * 1000 ] ).astype(float)           
+    
     return np.array(con_real).astype(float).flatten(), con_date
 
+    
+########################################################################################################
+########################################################################################################
+# Lets test the functions
 
+start = "2023-01-01"
+end = "2023-11-01"
+write_sql_table(start,end)
+#create_sql_table_from_csv(start,end)
+########################################################################################################
+########################################################################################################
 
+get_products(start,end)
+engine
+
+from datetime import datetime, timedelta
+symbol = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
+symbol.sort()
 
 start_date = '2023-11-02'
 x,y = eval_price(symbol,start_date)
+
+
+
+
+
 
