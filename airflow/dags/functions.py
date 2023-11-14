@@ -1,3 +1,4 @@
+########################################################################################################
 import time
 from binance.client import Client
 import numpy as np
@@ -8,15 +9,14 @@ from datetime import datetime, timezone
 import pandas as pd
 from sqlalchemy import create_engine, MetaData, Table, Column, String
 import os
-
-
+########################################################################################################
 # Replace with your Binance API key and secret
 api_key = 'qHsgWDMVoKKB9CNacVKPc9giyRyVgm8YdGqAFjJTibzc6FEMKEJdmBXvDlVzrTiK'
 api_secret = 'i45SJIRjGM9SL4fe42hC7V7c9B6YUUiQm7lVELHTZGzrE50K25pfv8ZagnuWEduI'
 
 client = Client( api_key = api_key , api_secret = api_secret)
 
-# define connections setup and write to database
+# Define connections setup and write to database
 ########################################################################################################
 # Here I defined a funtion to connect to the Server
 def connect_to_database():
@@ -29,7 +29,7 @@ def connect_to_database():
         database="wisdomise",
         user="henry",
         password="henry",
-        host="localhost",
+        host="pgdb",
         port="5432",
         )
     # Here I defined the connection like using f"{}" in order to pass parameters with .fomart(**params)
@@ -44,7 +44,7 @@ def connect_to_database():
     return engine
 
 ########################################################################################################
-# Here I defined a function to write to the table with a given query string
+# Define a function to write to the table with a given query string
 def write_to_database_historical(query):
 
     try:
@@ -56,7 +56,7 @@ def write_to_database_historical(query):
         print(f"Error writing to the database: {str(e)}")
         
 ########################################################################################################
-# Here I defined a function to close the connection 
+# Here, I defined a function to close the connection 
 def close_database_connection():
     
     # Close the session and the engine
@@ -69,7 +69,7 @@ def close_database_connection():
 engine = connect_to_database() 
 
 ########################################################################################################
-# Here I create a class to create a table within the database 
+# Here, I created a class to create a table within the database 
 # Note that Name of the class has nothing to do with table name since I put the name in __tablename__
 # Note that I defined __init___ and __repr___ functions in order to access to the database object created by the engine
 
@@ -87,13 +87,9 @@ class DataBase(Base):
 
     def __repr__(self):
         return f"({self.Time})({self.Price})"
+    
 ########################################################################################################
 # Now to create the database we should call the class DataBase
-########################################################################################################
-########################################################################################################
-########################################################################################################
-# There are some further notes to collect from the youtube you have bookmarket
-
 # This function should be called in order to make dataframe table
 def tablize():
     try:
@@ -126,9 +122,7 @@ def get_last_closed_price(symbol, interval):
     # I decided to use pandas instead of the numpy and I use all the inputs instead of selecting specific column
     Kline_realtime_data = pd.DataFrame(klines_realtime).iloc[-1:,4]
     # Now the line above will return a single vector like (row) of the last data 
-    
     return Kline_realtime_data
-
 
 ########################################################################################################
 # Now let's define historical data query
@@ -172,21 +166,20 @@ def get_historical_data(symbol,interval, start, end):
 ########################################################################################################
 # Define engine to get historical data and store it in CSVs
 
-def write(sym, inter, start,end):
+def write(symbols, interval, start,end):
+    
     concatenated_df = pd.DataFrame()
     
-    for i,j in enumerate(sym):
+    for symbol in symbols:
         
-        for m in inter:
+        for timeframe in interval:
             
-            temp = get_historical_data(j , m , start, end)
+            temp_ = get_historical_data(symbol , timeframe , start, end)
             
-            # Be careful About the path below since we hard coded it
-            #temp.to_csv(f'/Users/hamed/Downloads/data/{j}_{m}.csv', index = True)
-
-
-            concatenated_df = pd.concat([concatenated_df, temp], axis=0)
+            concatenated_df = pd.concat([concatenated_df, temp_], axis=0)
+            
             concatenated_df = concatenated_df.rename(columns={'Unnamed: 0' : 'key'})
+            
             concatenated_df['key'] = range(1, len(concatenated_df) + 1)
             
     concatenated_df = concatenated_df.set_index('key')
@@ -195,29 +188,31 @@ def write(sym, inter, start,end):
 
 ########################################################################################################
 # Get the list of top 10 Coins with highest marketcap and returns
+
 def get_products(start, end):
     
-    array = np.zeros((5,2))
+    #array = np.zeros((5,2))
     coins_list = []
     market_cap = []    
     price = []
-    returns = []
-    data = client.get_ticker()
+    #returns = []
+    data_json = client.get_ticker()
 
-    for coin in data:
-        f = coin['symbol']
-        if f.endswith('USDT'):
+    for coin in data_json:
+        symbol = coin['symbol']
+        if symbol.endswith('USDT'):
             
             coins_list.append(coin['symbol'])
             
-            pr = float(coin['lastPrice'])
+            price_ = float(coin['lastPrice'])
             
             volume = float(coin['volume'])
             
-            mc = pr * volume
+            market_cap_ = price_ * volume
             
-            price.append(pr)
-            market_cap.append(mc)
+            price.append(price_)
+            
+            market_cap.append(market_cap_)
             
     coins = list(pd.DataFrame({"Coin": coins_list,"Price": price, "MarketCap": market_cap}).sort_values(by = ["MarketCap"], ascending = False)["Coin"].head(10))
    
@@ -233,9 +228,10 @@ def get_products(start, end):
     
     return coins
     
-    ########################################################################################################
+########################################################################################################
 # Here is the function to write the CSV to Postgres
-def create_sql_table_from_csv(engine):
+'''
+# def create_sql_table_from_csv(engine):
     # Again hard coded path
     directory_path = "/Users/hamed/Downloads/data/"
     # Get all files in a directory
@@ -272,25 +268,25 @@ def create_sql_table_from_csv(engine):
     metadata.create_all(engine)
     
     concatenated_df.to_sql('dataframe', con=engine, if_exists='replace', index=False)
-    
+'''
     
     ########################################################################################################
 # Finally, here is the function to write the data into PostgreSQL DIRECTLY
 def write_sql_table(start,end):
 
-    inter = ['1d', '1w']
+    interval = ['1d', '1w']
     
     engine = connect_to_database()
     
-    symbol = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
-    symbol.sort()
+    symbols = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
+    symbols.sort()
     concatenated_df = pd.DataFrame()
     
-    for j in symbol:
+    for symbol in symbols:
         
-        for m in inter:
+        for timeframe in interval:
             
-            temp = get_historical_data(j , m , start, end)
+            temp = get_historical_data(symbol , timeframe , start, end)
 
             concatenated_df = pd.concat([concatenated_df, temp], axis=0)
             concatenated_df = concatenated_df.rename(columns={'Unnamed: 0' : 'key'})
@@ -306,6 +302,7 @@ def write_sql_table(start,end):
         
         # Here, I specified the datatypes are String50 due to the fact that all retrived data from binance python has this datatype
         column = Column(column_name, String(50))
+        
         table.append_column(column)
     
      # Create the table in the database
@@ -317,6 +314,7 @@ def write_sql_table(start,end):
  ########################################################################################################   
 
 def eval_price(symbol, start_date):
+    
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
 
     con_real = []
@@ -326,6 +324,7 @@ def eval_price(symbol, start_date):
 
 
     con_date = pd.DataFrame()
+    
     for j in symbol:
         temp_date = get_historical_data(j , '1d' , start_date, end_date)
         con_date = pd.concat([con_date, temp_date], axis=0)
