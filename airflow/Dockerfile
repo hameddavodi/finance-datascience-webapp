@@ -1,0 +1,12 @@
+ARG PYTHON_VERSION=3.10
+
+FROM airflow:${AIRFLOW_IMAGE_NAME:-apache/airflow:2.7.3}
+
+ENV PYTHONBUFFERED = 1
+
+WORKDIR /app
+
+
+COPY . .
+
+EXPOSE 8080 

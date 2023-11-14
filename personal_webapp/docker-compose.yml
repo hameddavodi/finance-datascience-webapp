@@ -1,0 +1,58 @@
+
+version: "3.8"
+
+services:
+  django:
+    build: .
+    container_name: ww_django
+
+    ports:
+      - "8000:8000"
+    command: celery -A core worker -l INFO
+
+    depends_on:
+      - pgdb
+      - rabit
+
+  pgdb:
+    image: postgres:14.1-alpine
+    
+    container_name: ww_pgdb
+    healthcheck:
+      #test: ["CMD", "pg_isready", "-U", "airflow"]
+      interval: 10s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+    environment:
+       - POSTGRES_USER=henry
+       - POSTGRES_PASSWORD=henry
+       - POSTGRES_DB=wisdomise
+
+    ports:
+       - "5432:5432"
+
+  pg_admin:
+    image: "dpage/pgadmin4:latest"
+    container_name: ww_pgadmin
+    
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@email.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+      - PGADMIN_LISTEN_PORT=5050
+
+    ports:
+      - "5050:5050"
+  
+  rabit:
+    image: rabbitmq:latest
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFUALT_USER=guest
+      - RABBITMQ_DEFUALT_PASS=guest
+
+

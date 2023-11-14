@@ -1,0 +1,146 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+  <meta name="keywords" content="data science and software" />
+  <meta name="description" content="a set of data science applications" />
+  <meta name="author" content="hamed davoodi" />
+
+  <title>Amedeo Davodi</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <span>Amedeo Davodi</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only"></span></a>
+              </li>
+
+            </ul>
+            <div class="quote_btn-container">
+              <form class="form-inline">
+                <button class="btn   nav_search-btn" type="submit">
+
+                </button>
+              </form>
+
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- service section -->
+
+  <section class="service_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h1 style="text-align: Center">
+          Finance:
+        </h1>
+      </div>
+    </div>
+    <div>
+      <h2 style="text-align: center"> Preloaded Stock Dataset from Yahoo<br></h2>
+      <p style="text-align: justify; text-align: justify; width: 80%; margin: auto;">
+
+         This section is designed to analyze data from a set of specific stocks, including 'AAPL,' 'NVDA,' 'LLY,' '^GSPC,' '^DJI,' 'MSFT,' 'GOOGL,' 'TSLA,' 'JPM,' 'AMZN,' 'JNJ,' 'WMT,' 'PG,' 'V,' 'MA,' 'BAC,' 'CSCO,' 'INTC,' and 'VZ' since the year 2000. Initially, the model randomly selects stocks for portfolio creation. However, in future iterations, it aims to optimize the selection of these stocks to provide you with the best possible portfolio weights. This gradual shift from randomness to optimization signifies the model's evolving sophistication and its commitment to enhancing portfolio performance over time.
+
+      </p>
+      <h1 style="text-align: center"> Efficient Frontier</h1>
+      <hr>
+    </div>
+
+    <div style="text-align: center">
+      <form action = "{% url 'fin' %}" method="get">
+        {% csrf_token %}
+        <p>Number of Assets you Want to Choose (Max 12 assets) : </p> <br>
+        <input  type = 'number' name = 'assets' id = 'assets' required > <br>
+        <br> <p> Number of Simulation you Want to Perform (Max 100,000 iterations) : </p> <br>
+        <input  type = 'number' name = 'portfolios' id = 'portfolios'  required > <br>
+        <br> <input  type = 'submit' value="Submit">
+      </form>
+    </div>
+
+      <hr>
+      <div style="margin: auto; margin: 10%">
+        <br><br>
+          {{sharp}}
+        <br><br>
+          {{maxd}}
+        <br><br>
+          {{sor}}
+      </div>
+
+      <hr>
+  </section>
+  <!-- end service section -->
+<section>
+      <div>
+        {{plotting | safe}}
+      </div>
+</section>
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://www.linkedin.com/in/Amedeo-davodi/">Amedeo Davodi (Hamed Davoodi)</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+
+</html>
