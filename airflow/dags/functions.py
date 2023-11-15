@@ -1,14 +1,14 @@
 ########################################################################################################
-import time
 from binance.client import Client
-import numpy as np
 from sqlalchemy import *
 from sqlalchemy.orm import Session,declarative_base, sessionmaker
+from sqlalchemy import create_engine, MetaData, Table, Column, String
 from sqlalchemy.sql import func
 from datetime import datetime, timezone
-import pandas as pd
-from sqlalchemy import create_engine, MetaData, Table, Column, String
+import time
 import os
+import pandas as pd
+import numpy as np
 ########################################################################################################
 # Replace with your Binance API key and secret
 api_key = 'qHsgWDMVoKKB9CNacVKPc9giyRyVgm8YdGqAFjJTibzc6FEMKEJdmBXvDlVzrTiK'
@@ -18,13 +18,12 @@ client = Client( api_key = api_key , api_secret = api_secret)
 
 # Define connections setup and write to database
 ########################################################################################################
-# Here I defined a funtion to connect to the Server
+# Here, I defined a funtion to connect to the Server
 def connect_to_database():
     # Make these availbale anywhere esle
     global engine, session
     
-    # Connect to your PostgreSQL database
-    # Here I defined parameters to have a clean structure
+    # parameters to your PostgreSQL database
     params = dict(
         database="wisdomise",
         user="henry",
@@ -276,8 +275,6 @@ def write_sql_table(start,end):
 
     interval = ['1d', '1w']
     
-    engine = connect_to_database()
-    
     symbols = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
     symbols.sort()
     concatenated_df = pd.DataFrame()
@@ -317,45 +314,43 @@ def eval_price(symbol, start_date):
     
     end_date = (datetime.strptime(start_date, '%Y-%m-%d') + timedelta(days=1)).strftime('%Y-%m-%d')
 
-    con_real = []
+    current_price = []
     for j in symbol:
         temp_real = np.array((get_last_closed_price(j , '1d')))
-        con_real.append(temp_real)
+        current_price.append(temp_real)
 
 
-    con_date = pd.DataFrame()
+    buy_date = pd.DataFrame()
     
     for j in symbol:
         temp_date = get_historical_data(j , '1d' , start_date, end_date)
-        con_date = pd.concat([con_date, temp_date], axis=0)
-    con_date = np.array(con_date["ClosePrice"][con_date["KlineOpen"] ==  int(datetime.strptime(start_date, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()) * 1000 ] ).astype(float)           
+        buy_date = pd.concat([buy_date, temp_date], axis=0)
+    buy_date = np.array(buy_date["ClosePrice"][buy_date["KlineOpen"] ==  int(datetime.strptime(start_date, '%Y-%m-%d').replace(tzinfo=timezone.utc).timestamp()) * 1000 ] ).astype(float)           
     
-    return np.array(con_real).astype(float).flatten(), con_date
+    return np.array(current_price).astype(float).flatten(), buy_date
 
     
 ########################################################################################################
 ########################################################################################################
-# Lets test the functions
-
+# Function to define start date to the current date
 start = "2023-01-01"
-end = "2023-11-01"
+def intervals(start):
+    end = datetime.now().strftime("%Y-%m-%d")
+    return start, end
+
+start, end = intervals(start)
+
+engine = connect_to_database()
+
 write_sql_table(start,end)
-#create_sql_table_from_csv(start,end)
-########################################################################################################
-########################################################################################################
 
 get_products(start,end)
-engine
+
 
 from datetime import datetime, timedelta
 symbol = ['BTCUSDT','ETHUSDT','XRPUSDT','SOLUSDT','ADAUSDT','LINKUSDT','MATICUSDT','DOTUSDT','AVAXUSDT','ATOMUSDT']
 symbol.sort()
 
 start_date = '2023-11-02'
-x,y = eval_price(symbol,start_date)
 
-
-
-
-
-
+current_price, buy_date_price = eval_price(symbol,start_date)
