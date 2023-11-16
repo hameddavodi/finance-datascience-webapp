@@ -127,5 +127,6 @@ webcolors==1.13
 webencodings==0.5.1
 websocket-client==1.6.4
 widgetsnbextension==4.0.9
+xgboost==2.0.0
 yarl==1.9.2
 yfinance==0.2.31

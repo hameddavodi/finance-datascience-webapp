@@ -82,7 +82,7 @@ DATABASES = {
         'NAME': 'wisdomise',
         'USER': 'henry',
         'PASSWORD': 'henry',
-        'HOST': 'pgdb',
+        'HOST': 'localhost',
         'PORT': 5432,
     }
 }
@@ -133,5 +133,5 @@ STATIC_ROOT = "./front/static"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-CELERY_BROKER_URL = 'amqp://rabit'
+CELERY_BROKER_URL = 'amqp://localhost:15672'
 CELERY_RESULT_BACKEND = 'rpc://'

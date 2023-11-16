@@ -27,6 +27,7 @@ urlpatterns = [
     path("", views.home, name="index"),
     path("finance", views.finance, name="finance"),
     path("data-science", views.datascience, name="datascience"),
+    path('wisdomise',views.wisdomise,name = "wisdomise"),
     path("", include(urls)),
 
 ]

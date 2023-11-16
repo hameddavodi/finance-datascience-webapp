@@ -6,5 +6,6 @@ from . import views
 urlpatterns = [
 
     path('datascience',views.formInfo, name = 'data'),
-    path('finance/',views.efifinance, name = 'fin')
+    path('finance/',views.efifinance, name = 'fin'),
+    path('wisdomise/',views.simple, name = 'wis')
 ]

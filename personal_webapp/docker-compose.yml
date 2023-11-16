@@ -9,7 +9,7 @@ services:
     ports:
       - "8000:8000"
       
-    command: celery -A core worker -l INFO
+    command: ["sh", "./run.sh"]
 
     depends_on:
       - pgdb

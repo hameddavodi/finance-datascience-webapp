@@ -3,12 +3,26 @@ import pandas as pd
 from django.http import request,response
 from joblib import load
 import xgboost as xgb
-
 from front import Effront
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.views.decorators.csrf import csrf_exempt
+from front.start_date import start_date_endpoint
 
 
 
+
+def simple(request):
+
+     return start_date_endpoint(request)
+     
+     
+  
+     
+     
+     
 model = load('./front/model/xgboost.joblib')
+
 def home(response):
     return render(response, "index.html")
 
@@ -16,13 +30,26 @@ def home(response):
 def finance(response):
     return render(response, "Finance.html")
 
+def wisdomise(response):
+    return render(response,"Wisdomise.html")
 
 def datascience(response):
     return render(response, "DataScience.html")
 
-from django.http import HttpResponse
-from django.shortcuts import render
-from django.views.decorators.csrf import csrf_exempt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
