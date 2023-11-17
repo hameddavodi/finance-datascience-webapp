@@ -1,16 +1,29 @@
-from django.http import HttpResponse
+from confluent_kafka import Producer
+class kafka_broker:
+  def __init__(self,start_date):
+    self.date = start_date
+    
+  def delivery_report(self, err, msg):
+      if err is not None:
+          print('Message delivery failed: {}'.format(err))
+      else:
+          print('Message delivered to {} [{}]'.format(msg.topic(), msg.partition()))
+  def send_start_date(self):
+  
+    # Kafka configuration
+    conf = {'bootstrap.servers': '172.18.0.3:9093'}
+  
+    # Create a Kafka producer instance
+    producer = Producer(conf)
+  
+    # Define the topic and message to be produced
+    topic = 'wisdomise_broker'
+    message = self.date
 
-def start_date_endpoint(request):
-    if request.method == 'GET':
-        start_date = f'"{str(request.GET.get("start_date", ""))}"'
-        
-        # Store values in a text file
-        with open('data.txt', 'w') as file:
-            file.write(start_date)
+    # Produce the message to the Kafka topic
+    producer.produce(topic, value=message, callback=self.delivery_report)
 
-        return HttpResponse('Value stored successfully in data.txt')
-    else:
-        return HttpResponse('Invalid request method', status=400)
-
+    # Wait for any outstanding messages to be delivered and delivery reports to be received
+    producer.flush()
 
      

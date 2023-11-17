@@ -7,14 +7,16 @@ from front import Effront
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
-from front.start_date import start_date_endpoint
+from front.start_date import *
 
 
 
 
 def simple(request):
-
-     return start_date_endpoint(request)
+    message = request.GET.get('start_date', '')
+    broker = kafka_broker(str(message))
+    broker.send_start_date()
+    return HttpResponse('Message sent to Kafka')
      
      
   
