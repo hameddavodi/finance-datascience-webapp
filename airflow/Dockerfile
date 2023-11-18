@@ -1,17 +1,13 @@
-ARG PYTHON_VERSION=3.10
 
-FROM apache/airflow:2.7.3
-
-COPY requirements.txt /requirements.txt
-
-RUN pip install --user --upgrade pip
-RUN pip install --no-cache-dir --user -r /requirements.txt
-
-ENV PYTHONBUFFERED = 1
-
-WORKDIR /app
-
-
-COPY . .
-
-EXPOSE 8080 
+FROM apache/airflow:latest
+USER root
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends \
+         vim \
+  && apt-get autoremove -yqq --purge \
+  && apt-get clean \
+  && rm -rf /var/lib/apt/lists/*
+USER airflow
+COPY requirements.txt /
+RUN pip install --no-cache-dir "apache-airflow==${AIRFLOW_VERSION}" -r /requirements.txt
+USER $AIRFLOW_UID

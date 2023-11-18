@@ -32,7 +32,9 @@ services:
        - POSTGRES_DB=wisdomise
 
     ports:
-       - "5432:5432"
+      - "65432:5432"
+    expose:
+      - "65432"
 
   pg_admin:
     image: "dpage/pgadmin4:latest"
@@ -75,7 +77,9 @@ services:
       KAFKA_CREATE_TOPICS: "wisdomise_broker:1:1"
     volumes:
      - /var/run/docker.sock:/var/run/docker.sock
-
+networks:
+  shared_net:
+    driver: bridge 
 
 
 
