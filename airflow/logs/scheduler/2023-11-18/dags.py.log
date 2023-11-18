@@ -4928,3 +4928,62 @@ Please take a look at these docs to improve your DAG import time:
 * https://airflow.apache.org/docs/apache-airflow/2.7.3/best-practices.html#reducing-dag-complexity, PID: 25976
 [2023-11-18T15:59:01.233+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/dags.py
 [2023-11-18T15:59:02.412+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/dags.py took 31.812 seconds
+[2023-11-18T16:10:24.567+0000] {processor.py:157} INFO - Started process (PID=34) to work on /opt/airflow/dags/dags.py
+[2023-11-18T16:10:24.576+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/dags.py for tasks to queue
+[2023-11-18T16:10:24.586+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:10:24.586+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/dags.py
+[2023-11-18T16:10:31.535+0000] {logging_mixin.py:154} INFO - Error: (psycopg2.OperationalError) connection to server at "172.21.0.8", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2023-11-18T16:10:55.577+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:10:55.571+0000] {timeout.py:68} ERROR - Process timed out, PID: 34
+[2023-11-18T16:10:55.583+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:10:55.578+0000] {dagbag.py:346} ERROR - Failed to import: /opt/airflow/dags/dags.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 342, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/dags.py", line 6, in <module>
+    from Core import *
+  File "/opt/airflow/dags/Core.py", line 241, in <module>
+    result = kafka_consumer('your_kafka_bootstrap_servers', 'your_consumer_group_id', 'your_topic_name')
+  File "/opt/airflow/dags/Core.py", line 217, in kafka_consumer
+    msg = consumer.poll(1.0)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/utils/timeout.py", line 69, in handle_timeout
+    raise AirflowTaskTimeout(self.error_message)
+airflow.exceptions.AirflowTaskTimeout: DagBag import timeout for /opt/airflow/dags/dags.py after 30.0s.
+Please take a look at these docs to improve your DAG import time:
+* https://airflow.apache.org/docs/apache-airflow/2.7.3/best-practices.html#top-level-python-code
+* https://airflow.apache.org/docs/apache-airflow/2.7.3/best-practices.html#reducing-dag-complexity, PID: 34
+[2023-11-18T16:10:55.584+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/dags.py
+[2023-11-18T16:10:55.610+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/dags.py took 31.049 seconds
+[2023-11-18T16:11:25.650+0000] {processor.py:157} INFO - Started process (PID=160) to work on /opt/airflow/dags/dags.py
+[2023-11-18T16:11:25.650+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/dags.py for tasks to queue
+[2023-11-18T16:11:25.652+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:11:25.652+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/dags.py
+[2023-11-18T16:11:30.479+0000] {logging_mixin.py:154} INFO - Error: (psycopg2.OperationalError) connection to server at "172.21.0.8", port 5432 failed: Connection refused
+	Is the server running on that host and accepting TCP/IP connections?
+
+(Background on this error at: https://sqlalche.me/e/14/e3q8)
+[2023-11-18T16:11:55.922+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:11:55.910+0000] {timeout.py:68} ERROR - Process timed out, PID: 160
+[2023-11-18T16:11:55.932+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:11:55.924+0000] {dagbag.py:346} ERROR - Failed to import: /opt/airflow/dags/dags.py
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/models/dagbag.py", line 342, in parse
+    loader.exec_module(new_module)
+  File "<frozen importlib._bootstrap_external>", line 843, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/opt/airflow/dags/dags.py", line 6, in <module>
+    from Core import *
+  File "/opt/airflow/dags/Core.py", line 241, in <module>
+    result = kafka_consumer('your_kafka_bootstrap_servers', 'your_consumer_group_id', 'your_topic_name')
+  File "/opt/airflow/dags/Core.py", line 217, in kafka_consumer
+    msg = consumer.poll(1.0)
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/utils/timeout.py", line 69, in handle_timeout
+    raise AirflowTaskTimeout(self.error_message)
+airflow.exceptions.AirflowTaskTimeout: DagBag import timeout for /opt/airflow/dags/dags.py after 30.0s.
+Please take a look at these docs to improve your DAG import time:
+* https://airflow.apache.org/docs/apache-airflow/2.7.3/best-practices.html#top-level-python-code
+* https://airflow.apache.org/docs/apache-airflow/2.7.3/best-practices.html#reducing-dag-complexity, PID: 160
+[2023-11-18T16:11:55.934+0000] {processor.py:841} WARNING - No viable dags retrieved from /opt/airflow/dags/dags.py
+[2023-11-18T16:11:55.966+0000] {processor.py:179} INFO - Processing /opt/airflow/dags/dags.py took 30.336 seconds
+[2023-11-18T16:12:26.336+0000] {processor.py:157} INFO - Started process (PID=280) to work on /opt/airflow/dags/dags.py
+[2023-11-18T16:12:26.340+0000] {processor.py:829} INFO - Processing file /opt/airflow/dags/dags.py for tasks to queue
+[2023-11-18T16:12:26.348+0000] {logging_mixin.py:154} INFO - [2023-11-18T16:12:26.347+0000] {dagbag.py:536} INFO - Filling up the DagBag from /opt/airflow/dags/dags.py

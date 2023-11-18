@@ -11,7 +11,7 @@ class kafka_broker:
   def send_start_date(self):
   
     # Kafka configuration
-    conf = {'bootstrap.servers': '172.18.0.3:9093'}
+    conf = {'bootstrap.servers': '172.24.0.6:29092'}
   
     # Create a Kafka producer instance
     producer = Producer(conf)
