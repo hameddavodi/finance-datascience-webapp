@@ -4,6 +4,8 @@ from airflow.operators.dummy_operator import DummyOperator
 from airflow.operators.python_operator import PythonOperator
 
 from Core import *
+
+
 default_args = {
         'owner' : 'Hamed',
         'start_date' : datetime(2022, 11, 12),
@@ -18,16 +20,26 @@ dag = DAG(dag_id='wisdomise_database',
 ################################################################
 start = DummyOperator(task_id = 'start', dag = dag)
 ################################################################
-start = "2023-01-01"
+
+def get_start_date(ti):
+    bootstrap_servers = 'localhost:29092'  
+    group_id = 'unique_1'  
+    topic = 'wisdomise_broker'  
+    last_received_message = kafka_consumer(bootstrap_servers, group_id, topic)
+    print(f"Last received message: {last_received_message}")
+
+    ti.xcom_push(key='starting_date', value=last_received_message)
 
 
+sensor = PythonOperator(task_id = 'pysensor1_trigger',
+                        python_callable= get_start_date,
+                        dag = dag)                        
 
-
-
-sensor = DummyOperator(task_id = 'pysensor1_trigger', dag = dag)
 ################################################################
-def write_psycop(start):
-    
+def write_psycop(ti):
+        
+   start = ti.xcom_pull(key='starting_date', task_ids="pysensor1_trigger")   
+     
    start, end = intervals(start)
 
    engine = connect_to_database()

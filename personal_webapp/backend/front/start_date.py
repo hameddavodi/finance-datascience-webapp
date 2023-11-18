@@ -18,6 +18,9 @@ class kafka_broker:
   
     # Define the topic and message to be produced
     topic = 'wisdomise_broker'
+    
+    
+    
     message = self.date
 
     # Produce the message to the Kafka topic
