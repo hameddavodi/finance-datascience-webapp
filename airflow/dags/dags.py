@@ -17,9 +17,15 @@ dag = DAG(dag_id='wisdomise_database',
     )
 ################################################################
 start = DummyOperator(task_id = 'start', dag = dag)
+################################################################
+start = "2023-01-01"
+
+
+
+
+
 sensor = DummyOperator(task_id = 'pysensor1_trigger', dag = dag)
 ################################################################
-
 def write_psycop(start):
     
    start, end = intervals(start)
@@ -27,8 +33,6 @@ def write_psycop(start):
    engine = connect_to_database()
 
    write_sql_table(start,end)
-
-    
 
 writng = PythonOperator(task_id = 'pyoperator_writing_api',
                         python_callable= write_psycop ,
