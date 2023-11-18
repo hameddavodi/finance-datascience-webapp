@@ -36,7 +36,7 @@ def connect_to_database():
         database="wisdomise",
         user="henry",
         password="henry",
-        host="localhost",
+        host="172.21.0.8",
         port="5432",
         )
     # Here I defined the connection like using f"{}" in order to pass parameters with .fomart(**params)
