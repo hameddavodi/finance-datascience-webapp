@@ -1,0 +1,14 @@
+[2023-11-20T21:40:42.390+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.get_start_date scheduled__2023-11-20T21:36:01.351409+00:00 [queued]>
+[2023-11-20T21:40:42.399+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.get_start_date scheduled__2023-11-20T21:36:01.351409+00:00 [queued]>
+[2023-11-20T21:40:42.399+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2023-11-20T21:40:42.408+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): get_start_date> on 2023-11-20 21:36:01.351409+00:00
+[2023-11-20T21:40:42.416+0000] {standard_task_runner.py:57} INFO - Started process 1213 to run task
+[2023-11-20T21:40:42.420+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'wisdomise_database_semi_final', 'get_start_date', 'scheduled__2023-11-20T21:36:01.351409+00:00', '--job-id', '122', '--raw', '--subdir', 'DAGS_FOLDER/dags.py', '--cfg-path', '/tmp/tmpgzi9vihl']
+[2023-11-20T21:40:42.421+0000] {standard_task_runner.py:85} INFO - Job 122: Subtask get_start_date
+[2023-11-20T21:40:42.457+0000] {task_command.py:416} INFO - Running <TaskInstance: wisdomise_database_semi_final.get_start_date scheduled__2023-11-20T21:36:01.351409+00:00 [running]> on host fcf8336e4e9c
+[2023-11-20T21:40:42.504+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Hamed' AIRFLOW_CTX_DAG_ID='wisdomise_database_semi_final' AIRFLOW_CTX_TASK_ID='get_start_date' AIRFLOW_CTX_EXECUTION_DATE='2023-11-20T21:36:01.351409+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-11-20T21:36:01.351409+00:00'
+[2023-11-21T00:57:38.846+0000] {local_task_job_runner.py:294} WARNING - State of this instance has been externally set to failed. Terminating instance.
+[2023-11-21T00:57:38.980+0000] {process_utils.py:131} INFO - Sending 15 to group 1213. PIDs of all processes in the group: [1213]
+[2023-11-21T00:57:38.982+0000] {process_utils.py:86} INFO - Sending the signal 15 to group 1213
+[2023-11-21T00:57:41.231+0000] {taskinstance.py:1632} ERROR - Received SIGTERM. Terminating subprocesses.
+[2023-11-21T00:57:41.763+0000] {process_utils.py:79} INFO - Process psutil.Process(pid=1213, status='terminated', exitcode=0, started='21:40:41') (1213) terminated with exit code 0

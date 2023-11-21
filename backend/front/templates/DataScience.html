@@ -1,0 +1,152 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html xmlns:margin="http://www.w3.org/1999/xhtml">
+
+<head>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+  <meta name="keywords" content="data science and software" />
+  <meta name="description" content="a set of data science applications" />
+  <meta name="author" content="hamed davoodi" />
+
+  <title>Amedeo Davodi</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <span>Amedeo Davodi</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only"></span></a>
+              </li>
+
+            </ul>
+            <div class="quote_btn-container">
+              <form class="form-inline">
+                <button class="btn   nav_search-btn" type="submit">
+
+                </button>
+              </form>
+
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- service section -->
+
+  <section class="service_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          <p style="text-align: justify; width: 80%; margin: auto;">
+          Machine Deflection Detector
+        </h2>
+      </div>
+    </div>
+    <div >
+      <p style="text-align: justify; width: 80%; margin: auto;">
+      
+      Within the dynamic landscape of portfolio optimization, my web application, crafted with Python, Postgres, Django, Celery, RabbitMQ, Redis, Airflow, and Kafka, employs an advanced methodology inspired by Modern Portfolio Theory. 
+      Specifically, influenced by the insights of Harry Markowitz, the application strategically constructs an optimal portfolio by simulating over <strong>a million scenarios</strong> using Monte Carlo simulations. 
+      This process involves a meticulous analysis of historical asset performance and correlation assessments to identify a diversified portfolio that maximizes returns within predefined risk parameters. 
+      The intricate optimization calculations, powered by Python with NumPy and SciPy, dive into an extensive array of simulations to iteratively refine the portfolio composition. With Postgres ensuring efficient data storage, Django facilitating web development, and Celery orchestrating seamless asynchronous background tasks for python, the application stands as a sophisticated solution for portfolio optimization. 
+      The integration of Airflow, Postgres and Kafka further enhances workflow orchestration and real-time data streaming capabilities, contributing to a robust and forward-looking optimization approach.
+
+      </p>
+      <div>
+        <h4 style="text-align: center"> Please fill the values below and hit submit: </h4>
+      </div>
+    </div>
+
+
+
+
+    <div style="text-align: center">
+
+
+
+      <hr>
+      <form action="{% url 'data' %}">
+        {% csrf_token %}
+        Air Temperature (Min: 295, Max: 304, Std.: 1.86) : <br> <input type = 'number' step="0.1" name = 'f1' required > <br>
+        Process Temperature (Min: 306, Max: 314, Std.: 1.39) : <br> <input type = 'number' step="0.1"  name = 'f2' required > <br>
+        Rotational Speed (Min: 1181, Max: 2886, Std.: 139) : <br> <input type = 'number' step="0.1" name = 'f3' required > <br>
+        Torque (Min: 3.8, Max: 76.6, Std.: 8.5) : <br> <input type = 'number' step="0.1" name = 'f4' required > <br>
+        Tool Wear (Min: 0, Max: 253, Std.: 64) : <br> <input type = 'number' step="0.1" name = 'f5' required > <br>
+        <hr>
+        <input style="text-align: right" type = 'submit'>
+
+      </form>
+      <hr>
+    </div>
+  <div>
+    <h2 style="text-align: center"> The machine might be: <br> </h2>
+    <h1 style="text-align: center"> {{result}} <br> </h1>
+
+  </div>
+  </section>
+
+  <!-- end service section -->
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://www.linkedin.com/in/Amedeo-davodi/">Amedeo Davodi (Hamed Davoodi)</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+
+</html>

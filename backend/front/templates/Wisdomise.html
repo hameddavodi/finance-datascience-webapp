@@ -1,0 +1,313 @@
+{% load static%}
+
+<!DOCTYPE html>
+<html xmlns:margin="http://www.w3.org/1999/xhtml">
+
+<head>
+    <style>
+    .error-message {
+      color: red;
+    }
+  </style>
+    <style>
+    table {
+      font-family: Arial, sans-serif;
+      border-collapse: collapse;
+      width: 80%;
+      margin: 20px auto; /* Center the table */
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 10px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+  <!-- Basic -->
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <!-- Mobile Metas -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <!-- Site Metas -->
+  <link rel="icon" href="{% static 'images/fevicon.png' %}" type="image/gif" />
+  <meta name="keywords" content="data science and software" />
+  <meta name="description" content="a set of data science applications" />
+  <meta name="author" content="hamed davoodi" />
+
+  <title>Amedeo Davodi</title>
+
+
+  <!-- bootstrap core css -->
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.css' %}" />
+
+  <!-- fonts style -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- font awesome style -->
+  <link href="{% static 'css/font-awesome.min.css' %}" rel="stylesheet" />
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'css/style.css' %}" rel="stylesheet" />
+  <!-- responsive style -->
+  <link href="{% static 'css/responsive.css' %}" rel="stylesheet" />
+
+</head>
+
+<body class="sub_page">
+
+  <div class="hero_area">
+    <!-- header section strats -->
+    <header class="header_section">
+      <div class="container-fluid">
+        <nav class="navbar navbar-expand-lg custom_nav-container ">
+          <a class="navbar-brand" href="{% url 'index' %}">
+            <span>Amedeo Davodi</span>
+          </a>
+
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class=""> </span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav  ml-auto">
+              <li class="nav-item ">
+                <a class="nav-link" href="{% url 'index' %}">Home <span class="sr-only"></span></a>
+              </li>
+
+            </ul>
+            <div class="quote_btn-container">
+              <form class="form-inline">
+                <button class="btn   nav_search-btn" type="submit">
+
+                </button>
+              </form>
+
+            </div>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!-- end header section -->
+  </div>
+
+  <!-- service section -->
+
+  <section class="service_section layout_padding">
+    <div class="container">
+      <div class="heading_container heading_center">
+        <h2>
+          <p style="margin-left:auto; margin-right:auto; text-align:center">Wisdomise Trial Portifolio</p>
+        </h2>
+      </div>
+    </div>
+    <div >
+      <p style="text-align: justify; width: 80%; margin: auto;">
+        Within the dynamic landscape of portfolio optimization, my web application, crafted with Python, Postgres, Django, Celery, RabbitMQ, Redis, Airflow, and Kafka, employs an advanced methodology inspired by Modern Portfolio Theory. 
+        Specifically, influenced by the insights of Harry Markowitz, the application strategically constructs an optimal portfolio by simulating over <strong>a million scenarios</strong> using Monte Carlo simulations. 
+        This process involves a meticulous analysis of historical asset performance and correlation assessments to identify a diversified portfolio that maximizes returns within predefined risk parameters. 
+        The intricate optimization calculations, powered by Python with NumPy and SciPy, dive into an extensive array of simulations to iteratively refine the portfolio composition. With Postgres ensuring efficient data storage, Django facilitating web development, and Celery orchestrating seamless asynchronous background tasks for python, the application stands as a sophisticated solution for portfolio optimization. 
+        The integration of Airflow, Postgres and Kafka further enhances workflow orchestration and real-time data streaming capabilities, contributing to a robust and forward-looking optimization approach.
+        The evaluation specifically applies to the top 10 high-priced crypto assets: BTCUSDT, ETHUSDT, XRPUSDT, SOLUSDT, ADAUSDT, LINKUSDT, MATICUSDT, DOTUSDT, AVAXUSDT, and ATOMUSDT.
+
+      </p>
+      <div>
+        <h4 style="text-align: center"> Please fill the values below and hit submit: </h4>
+      </div>
+    </div>
+
+
+
+
+<div style="text-align: center">
+    <hr>
+    
+    <form action="{% url 'wis' %}">
+        <p style="text-align: center; width: 80%; margin: auto;">
+            {% csrf_token %}
+            <!-- Your form fields go here -->
+            Please specify start date of market data: <br>
+            <input type='text' step="0.1" name='start_date' required required placeholder='YYYY-MM-DD'> <br>
+            Please specify current portfolio vector (Percent): <br>
+
+  <input type='number' step="0.1" name='ada' required placeholder='ADA USDT'>
+  <input type='number' step="0.1" name='atom' required placeholder='ATOM USDT'>
+  <input type='number' step="0.1" name='avax' required placeholder='AVAX USDT'>
+  <input type='number' step="0.1" name='btc' required placeholder='BTC USDT'>
+  <input type='number' step="0.1" name='dot' required placeholder='DOT USDT'>
+  <input type='number' step="0.1" name='eth' required placeholder='ETH USDT'>
+  <input type='number' step="0.1" name='link' required placeholder='LINK USDT'>
+  <input type='number' step="0.1" name='matic' required placeholder='MATIC USDT'>
+  <input type='number' step="0.1" name='sol' required placeholder='SOL USDT'>
+  <input type='number' step="0.1" name='xrp' required placeholder='XRP USDT'>
+
+<div id="error-message" class="error-message"></div>
+
+<script>
+function validateForm() {
+  var inputs = document.querySelectorAll('input[name^=""]');
+  var sum = 0;
+
+  for (var i = 0; i < inputs.length; i++) {
+    var value = parseFloat(inputs[i].value);
+    
+    if (isNaN(value) || value < 0 || value > 100) {
+      document.getElementById('error-message').innerText = 'Values should be between 0 and 100.';
+      return false;
+    }
+
+    sum += value;
+  }
+
+  if (sum !== 100) {
+    document.getElementById('error-message').innerText = 'The sum of values must be 100.';
+    return false;
+  }
+
+  return true;
+}
+</script>
+      
+        <br>
+        Please specify current portfolio bought date:<br>
+        <input type='text' step="0.1" name='buy_date' required placeholder='YYYY-MM-DD'><br>
+        <br>
+        Please specify Time frame of the process:<br>
+        <select id="TF" name="timeframe">
+            <option value="1d">Daily</option>
+            <option value="1w">Weekly</option>
+        </select>
+        <input type="submit" value="Make Me Rich !">
+        <br>
+        <hr>
+        </p>
+    </form>
+    <hr>
+</div>
+
+
+
+
+
+<div> 
+<h3 style="text-align: center; font-weight: bold;"> Best Portfolio Vector might be: <br> </h3>
+
+<table boarder = "1">
+    <tr>
+      <th>ADAUSDT</th>
+      <th>ATOMUSDT</th>
+      <th>AVAXUSDT</th>
+      <th>BTCUSDT</th>
+      <th>DOTUSDT</th>
+      <th>ETHUSDT</th>
+      <th>LINKUSDT</th>
+      <th>MATICUSDT</th>
+      <th>SOLUSDT</th>
+      <th>XRPUSDT</th>
+    </tr>
+    <tr>
+      {% for value in  opt_vector %}
+        <td>{{ value }}</td>
+      {% endfor %}
+	</tr>
+
+  </table>
+
+    
+<h3 style="text-align: center; font-weight: bold;"> Current Price Vector: <br> </h3>
+
+
+<table>
+	<tbody>
+		<tr>
+			<th>ADAUSDT</th>
+			<th>ATOMUSDT</th>
+			<th>AVAXUSDT</th>
+			<th>BTCUSDT</th>
+			<th>DOTUSDT</th>
+			<th>ETHUSDT</th>
+			<th>LINKUSDT</th>
+			<th>MATICUSDT</th>
+			<th>SOLUSDT</th>
+			<th>XRPUSDT</th>
+		</tr>
+		<tr>
+    <tr>
+  {% for value in price_latest %}
+    <td>{{ value }}</td>
+  {% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+
+<h3 style="text-align: center; font-weight: bold;"> Bought Date Price Vector: <br> </h3>
+
+
+<table>
+	<tbody>
+		<tr>
+			<th>ADAUSDT</th>
+			<th>ATOMUSDT</th>
+			<th>AVAXUSDT</th>
+			<th>BTCUSDT</th>
+			<th>DOTUSDT</th>
+			<th>ETHUSDT</th>
+			<th>LINKUSDT</th>
+			<th>MATICUSDT</th>
+			<th>SOLUSDT</th>
+			<th>XRPUSDT</th>
+		</tr>
+		<tr>
+    <tr>
+  {% for value in price_bought_date %}
+    <td>{{ value }}</td>
+  {% endfor %}
+		</tr>
+	</tbody>
+</table>
+
+  <section>
+    <div>
+      {{plotting | safe}}
+    </div>
+  </section>
+</div>   
+  <!-- end service section -->
+
+
+
+
+  <!-- footer section -->
+  <footer class="footer_section">
+    <div class="container">
+      <p>
+        &copy; <span id="displayYear"></span> All Rights Reserved By
+        <a href="https://www.linkedin.com/in/Amedeo-davodi/">Amedeo Davodi (Hamed Davoodi)</a>
+      </p>
+    </div>
+  </footer>
+  <!-- footer section -->
+
+  <!-- jQery -->
+  <script src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+  <!-- bootstrap js -->
+  <script src="{% static 'js/bootstrap.js' %}"></script>
+  <!-- custom js -->
+  <script src="{% static 'js/custom.js' %}"></script>
+
+
+</body>
+
+</html>

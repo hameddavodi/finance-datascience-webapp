@@ -1,0 +1,14 @@
+[2023-11-20T21:20:00.902+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.send_success scheduled__2023-11-20T21:10:43.665081+00:00 [queued]>
+[2023-11-20T21:20:00.909+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.send_success scheduled__2023-11-20T21:10:43.665081+00:00 [queued]>
+[2023-11-20T21:20:00.909+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2023-11-20T21:20:00.917+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): send_success> on 2023-11-20 21:10:43.665081+00:00
+[2023-11-20T21:20:00.924+0000] {standard_task_runner.py:57} INFO - Started process 556 to run task
+[2023-11-20T21:20:00.928+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'wisdomise_database_semi_final', 'send_success', 'scheduled__2023-11-20T21:10:43.665081+00:00', '--job-id', '105', '--raw', '--subdir', 'DAGS_FOLDER/dags.py', '--cfg-path', '/tmp/tmpmqimw3bc']
+[2023-11-20T21:20:00.929+0000] {standard_task_runner.py:85} INFO - Job 105: Subtask send_success
+[2023-11-20T21:20:00.960+0000] {task_command.py:416} INFO - Running <TaskInstance: wisdomise_database_semi_final.send_success scheduled__2023-11-20T21:10:43.665081+00:00 [running]> on host fcf8336e4e9c
+[2023-11-20T21:20:01.011+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Hamed' AIRFLOW_CTX_DAG_ID='wisdomise_database_semi_final' AIRFLOW_CTX_TASK_ID='send_success' AIRFLOW_CTX_EXECUTION_DATE='2023-11-20T21:10:43.665081+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-11-20T21:10:43.665081+00:00'
+[2023-11-20T21:20:01.035+0000] {logging_mixin.py:154} INFO - Message delivered to wisdomise_broker [0]
+[2023-11-20T21:20:01.047+0000] {python.py:194} INFO - Done. Returned value was: None
+[2023-11-20T21:20:01.064+0000] {taskinstance.py:1400} INFO - Marking task as SUCCESS. dag_id=wisdomise_database_semi_final, task_id=send_success, execution_date=20231120T211043, start_date=20231120T212000, end_date=20231120T212001
+[2023-11-20T21:20:01.102+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 0
+[2023-11-20T21:20:01.120+0000] {taskinstance.py:2778} INFO - 1 downstream tasks scheduled from follow-on schedule check

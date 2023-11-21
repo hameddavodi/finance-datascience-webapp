@@ -1,0 +1,22 @@
+[2023-11-20T01:10:47.679+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.pyoperator_kafka_api scheduled__2023-11-20T01:06:12.306015+00:00 [queued]>
+[2023-11-20T01:10:47.691+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: wisdomise_database_semi_final.pyoperator_kafka_api scheduled__2023-11-20T01:06:12.306015+00:00 [queued]>
+[2023-11-20T01:10:47.691+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 1
+[2023-11-20T01:10:47.710+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): pyoperator_kafka_api> on 2023-11-20 01:06:12.306015+00:00
+[2023-11-20T01:10:47.722+0000] {standard_task_runner.py:57} INFO - Started process 417 to run task
+[2023-11-20T01:10:47.725+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'wisdomise_database_semi_final', 'pyoperator_kafka_api', 'scheduled__2023-11-20T01:06:12.306015+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/dags.py', '--cfg-path', '/tmp/tmpilya3zfk']
+[2023-11-20T01:10:47.726+0000] {standard_task_runner.py:85} INFO - Job 11: Subtask pyoperator_kafka_api
+[2023-11-20T01:10:47.768+0000] {task_command.py:416} INFO - Running <TaskInstance: wisdomise_database_semi_final.pyoperator_kafka_api scheduled__2023-11-20T01:06:12.306015+00:00 [running]> on host fcf8336e4e9c
+[2023-11-20T01:10:47.827+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='Hamed' AIRFLOW_CTX_DAG_ID='wisdomise_database_semi_final' AIRFLOW_CTX_TASK_ID='pyoperator_kafka_api' AIRFLOW_CTX_EXECUTION_DATE='2023-11-20T01:06:12.306015+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2023-11-20T01:06:12.306015+00:00'
+[2023-11-20T01:10:47.834+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/dags.py", line 29, in check
+    return check_connection()
+NameError: name 'check_connection' is not defined
+[2023-11-20T01:10:47.842+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=wisdomise_database_semi_final, task_id=pyoperator_kafka_api, execution_date=20231120T010612, start_date=20231120T011047, end_date=20231120T011047
+[2023-11-20T01:10:47.856+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 11 for task pyoperator_kafka_api (name 'check_connection' is not defined; 417)
+[2023-11-20T01:10:47.900+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-20T01:10:47.920+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
