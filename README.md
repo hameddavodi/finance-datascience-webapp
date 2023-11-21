@@ -1,9 +1,6 @@
-
-
-A web application about finance and data science
 # Portfolio Optimization Repository
 
-In this GitHub repository, I've developed an innovative solution focused on optimizing portfolios using Python, Django, Apache Airflow, and Kafka. This comprehensive project incorporates real-world values and employs a comparative approach to evaluate performance. The essence of the repository lies in providing a straightforward method to assess vectors and their associated outcomes within portfolio optimization.
+In this GitHub repository, I've developed an innovative solution focused on optimizing portfolios using Python, Django, Apache Airflow, and Kafka. This comprehensive project incorporates real-world values and employs a comparative approach to evaluate performance. The essence of the repository lies in providing a straightforward method to assess vectors and their associated outcomes within portfolio optimization. (look at these pythons :D)
 
 <img width="1036" alt="Screenshot 2023-11-21 at 13 59 27" src="https://github.com/hameddavodi/finance-datascience-webapp/assets/109058050/e981f6aa-4c3f-4d7c-9454-e391dfd60197">
 
